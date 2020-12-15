@@ -58,43 +58,48 @@ wss.on('connection', function connection(ws) {
  
 
   ws.on('message', function incoming(data) {
-    msg = JSON.parse(data);
-    console.log(msg);
+    try{
+      msg = JSON.parse(data);
+      console.log(msg);
 
-    //If a login then send back the current data
-    if(msg.type =="login"){
-      handleLogin(data, ws);
-    } else if(msg.type =="logout") { 
-      handleLogout(data);
-    }else if(msg.type =="init") {
-      console.log("initing " +JSON.stringify(currentData));
-      ws.send(JSON.stringify(currentData));
-      //ws.send(JSON.stringify(stateEvent));
-    } else if(msg.type =="selectionEvent") {
-      handleNewData(data);
-    } else if(msg.type ==="nextUser") {
-      handleNextUser(ws);
-    } else if(msg.type ==="state") {
-      BroadcastMessage(JSON.stringify(msg));
-    } else if(msg.type ==="data") {
-      currentData = msg;
-      console.log("/nsetting data to /n" +JSON.stringify(currentData));
-      BroadcastMessage(JSON.stringify(msg));
-    } else if(msg.type ==="reset") {
-      handleInit();
-      resetEvent.body = "reset";
-      BroadcastMessage(JSON.stringify(resetEvent));
-      BroadcastMessage(JSON.stringify(currentData));
-    } else if(msg.type ==="reload") {
-      resetEvent.body = "reload";
-      reloadData();
-    } else if(msg.type ==="giftSelect") {
-      handleGiftSelect(msg);
-    }  else if(msg.type ==="giftSteal") {
-      handleGiftSwap(msg);
-    }  else if(msg.type ==="move") {
-      BroadcastMessage(JSON.stringify(msg));
+      //If a login then send back the current data
+      if(msg.type =="login"){
+        handleLogin(data, ws);
+      } else if(msg.type =="logout") { 
+        handleLogout(data);
+      }else if(msg.type =="init") {
+        console.log("initing " +JSON.stringify(currentData));
+        ws.send(JSON.stringify(currentData));
+        //ws.send(JSON.stringify(stateEvent));
+      } else if(msg.type =="selectionEvent") {
+        handleNewData(data);
+      } else if(msg.type ==="nextUser") {
+        handleNextUser(ws);
+      } else if(msg.type ==="state") {
+        BroadcastMessage(JSON.stringify(msg));
+      } else if(msg.type ==="data") {
+        currentData = msg;
+        console.log("/nsetting data to /n" +JSON.stringify(currentData));
+        BroadcastMessage(JSON.stringify(msg));
+      } else if(msg.type ==="reset") {
+        handleInit();
+        resetEvent.body = "reset";
+        BroadcastMessage(JSON.stringify(resetEvent));
+        BroadcastMessage(JSON.stringify(currentData));
+      } else if(msg.type ==="reload") {
+        resetEvent.body = "reload";
+        reloadData();
+      } else if(msg.type ==="giftSelect") {
+        handleGiftSelect(msg);
+      }  else if(msg.type ==="giftSteal") {
+        handleGiftSwap(msg);
+      }  else if(msg.type ==="move") {
+        BroadcastMessage(JSON.stringify(msg));
+      } 
     } 
+    catch(err) {
+      //console.log(err);
+    }
   });
   //endon
 });
