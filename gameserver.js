@@ -171,7 +171,13 @@ handleGiftSwap = (msg) => {
  */
 handleLogin = (data, ws) => {
   loginObj=JSON.parse(data);
-  
+  console.log("handle login " +data);
+
+ /* for(var i =0;i<allUsers.length;i++)
+  {
+    console.log(allUsers[i]);
+  }*/s
+
   if(allUsers.includes(loginObj.body)) { // check to see if the user is in the valid list of loggedInUsers taken from allUsers
     
     //If a new login then pus to the loggedINUsers array
