@@ -119,7 +119,7 @@ reloadData = () => {
   readFile(LATEST_STATE_FILE);
   //allUsers = currentData.body.map(user => user.email);
   //reloading needs to update the list of users that have played and are yet to play
-  allUsersRemainingToPlay = allUsers;
+  allUsersRemainingToPlay = JSON.parse(JSON.stringify(allUsers)); //make a deepcopy
   for(i=0;i<currentData.body.length;i++){
     if(currentData.body[i].receiver) {
         //remove the user from allremainingtoplay
@@ -143,8 +143,10 @@ handleGiftSelect = (msg) => {
   persistUpdates();
 }
 
+/**
+ * 
+ */
 removeRemainingUser = (user) => {
-
   for(i=0;i<allUsersRemainingToPlay.length;i++){
     if(allUsersRemainingToPlay[i] === user) {
       allUsersRemainingToPlay.splice(i, 1); 
