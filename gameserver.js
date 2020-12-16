@@ -171,7 +171,7 @@ handleGiftSwap = (msg) => {
  */
 handleLogin = (data, ws) => {
   loginObj=JSON.parse(data);
-  console.log("handle login " +data +);
+  console.log("handle login " +data);
 
   for(var i=0;i<allUsers.length;i++)
   {
