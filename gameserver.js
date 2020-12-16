@@ -3,7 +3,7 @@ const fs = require('fs');
 const wss = new WebSocket.Server({ port: 8089 });
 const ADMIN = "gcolman";
 const INIT_FILE="./config.json";
-const LATEST_STATE_FILE="./latestState.json"
+const LATEST_STATE_FILE="./data/latestState.json"
 
  currentData ={};
 var browseEvent ={"type": "browse","body": "2",};
