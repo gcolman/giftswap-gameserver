@@ -173,10 +173,10 @@ handleLogin = (data, ws) => {
   loginObj=JSON.parse(data);
   console.log("handle login " +data);
 
- /* for(var i =0;i<allUsers.length;i++)
+  for(var i =0;i<allUsers.length;i++)
   {
     console.log(allUsers[i]);
-  }*/s
+  }
 
   if(allUsers.includes(loginObj.body)) { // check to see if the user is in the valid list of loggedInUsers taken from allUsers
     
@@ -184,13 +184,15 @@ handleLogin = (data, ws) => {
     if(!loggedInUsers.body.includes(loginObj.body)) {
       loggedInUsers.body.push(loginObj.body);
     }
-      
+      console.log(".");
       // send the current data back to the user
       loginSuccess.user=msg.body;
+      console.log("..");
       ws.send(JSON.stringify(loginSuccess));
-
+      console.log("....");
       //send everyone the updated list of loggedInUsers
       BroadcastMessage(JSON.stringify(loggedInUsers));
+      console.log(".....");
       BroadcastMessage(JSON.stringify(currentData));
 
 }};
