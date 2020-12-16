@@ -18,6 +18,7 @@ var loginSuccess={"type": "loginSuccess", "body": ""};
 var allUsers = [];
 var allUsersRemainingToPlay = [];
 var allUsersHavingPlayed = [];
+var wsaddress;
 
 //hnandle some init stuff like reading input files etc.
 handleInit();
@@ -26,14 +27,13 @@ handleInit();
 function handleInit() {
   //if restart (i.e the websocket server has gone down mid game) then reload the in game data
   //else reload start data
+  wsaddress = process.env.WEBSOCKET_ADDRESS;
+  console.log("my address " +process.env.WEBSOCKET_ADDRESS);
   loggedInUsers.body = [];
   allUsers = [];
   allUsersRemainingToPlay = [];
   allUsersHavingPlayed = [];
   readFile(INIT_FILE);
-  //allUsers = this.currentData.body.map(user => user.email);
-  allUsersRemainingToPlay = allUsers;
-  //this.state.remainingUsers = allUsersRemainingToPlay.length;
 };
 
 
@@ -43,7 +43,7 @@ function readFile (filename){
     this.currentData = JSON.parse(data);
     console.log("-----> reading file");
     allUsers = this.currentData.body.map(user => user.email);
-
+    allUsersRemainingToPlay = this.currentData.body.map(user => user.email);
   } catch (err) {
     console.error(err)
   }
@@ -144,12 +144,14 @@ handleGiftSelect = (msg) => {
 }
 
 removeRemainingUser = (user) => {
+
   for(i=0;i<allUsersRemainingToPlay.length;i++){
     if(allUsersRemainingToPlay[i] === user) {
       allUsersRemainingToPlay.splice(i, 1); 
       console.log("remove " +user);
     }
   }
+
 }
 
 /**
@@ -185,15 +187,11 @@ handleLogin = (data, ws) => {
     if(!loggedInUsers.body.includes(loginObj.body)) {
       loggedInUsers.body.push(loginObj.body);
     }
-      console.log(".");
       // send the current data back to the user
       loginSuccess.user=msg.body;
-      console.log("..");
       ws.send(JSON.stringify(loginSuccess));
-      console.log("....");
       //send everyone the updated list of loggedInUsers
       BroadcastMessage(JSON.stringify(loggedInUsers));
-      console.log(".....");
       BroadcastMessage(JSON.stringify(currentData));
 
 }};
