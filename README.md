@@ -2,7 +2,7 @@
 Gameserver for giftswap game.
 
 
-This he gameserver holds all server state and manages the connections from clients. When clients connect via the webservice, the server sends config information. 
+This he gameserver holds all server state and manages the connections from clients (https://github.com/gcolman/giftswap). When clients connect via the webservice, the server sends config information. 
 From thereon the server responds to client side events. 
 
 The client reads the game config from config.json
